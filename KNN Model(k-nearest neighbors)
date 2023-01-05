@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import warnings
+warnings.filterwarnings('ignore')
+
+data = pd.read_csv('/content/diabetes.csv')
+
+x = data.drop('Outcome', axis=1).values   
+y = data['Outcome'].values    
+
+from sklearn.neighbors import KNeighborsClassifier 
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42, stratify=y)
+
+knn = KNeighborsClassifier(n_neighbors = 7)
+knn.fit(x_train, y_train)
+print(knn.score(x_test, y_test))
+print("Accuracy = {}".format(round(knn.score(x_test, y_test),2) * 100))
+
